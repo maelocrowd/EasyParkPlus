@@ -34,106 +34,6 @@ class ParkingLotUI:
 
         self.create_widgets()
 
-    # def create_widgets(self):
-        # Heading
-        tk.Label(self.root, text='Parking Lot Manager', font='Arial 14 bold').grid(row=0, column=0, columnspan=6, padx=10)
-        tk.Label(self.root, text='Lot Creation', font='Arial 12 bold').grid(row=1, column=0, columnspan=6, padx=10)
-
-        # City & Site & Level for lot creation
-        tk.Label(self.root, text='City', font='Arial 12').grid(row=2, column=0)
-        city_list = Config.CITY_LIST
-        self.city_combo = ttk.Combobox(self.root, values=city_list, textvariable=self.city_name, font='Arial 12', width=12)
-        self.city_combo.set('--Select city--')
-        self.city_combo.grid(row=2, column=1)
-        # self.city_combo.bind("<<ComboboxSelected>>", self.update_sites)
-
-        tk.Label(self.root, text='Site', font='Arial 12').grid(row=2, column=2)
-        # self.site_combo = ttk.Combobox(self.root, values=[], textvariable=self.site_name, font='Arial 12', width=12)
-        self.site_combo = tk.Entry(self.root, textvariable=self.site_name, font='Arial 12', width=12)
-        # self.site_combo.set('--Select site--')
-        self.site_combo.grid(row=2, column=3)
-        # self.site_combo.bind("<<ComboboxSelected>>", self.update_levels)
-
-        tk.Label(self.root, text='Level', font='Arial 12').grid(row=2, column=4)
-        # self.level_combo = ttk.Combobox(self.root, values=[], textvariable=self.level_value, font='Arial 12', width=6)
-        self.level_combo = tk.Entry(self.root, textvariable=self.level_value, font='Arial 12', width=6)
-        # self.level_combo.set('--Select level--')
-        self.level_combo.grid(row=2, column=5)
-
-        # Slots
-        tk.Label(self.root, text='Regular Slots', font='Arial 12').grid(row=3, column=0)
-        tk.Entry(self.root, textvariable=self.num_regular_slots, width=6, font='Arial 12').grid(row=3, column=1)
-        tk.Label(self.root, text='EV Slots', font='Arial 12').grid(row=3, column=2)
-        tk.Entry(self.root, textvariable=self.num_ev_slots, width=6, font='Arial 12').grid(row=3, column=3)
-        tk.Label(self.root, text='EV Chargers', font='Arial 12').grid(row=3, column=4)
-        tk.Entry(self.root, textvariable=self.num_EVChargers, width=6, font='Arial 12').grid(row=3, column=5)
-
-        tk.Button(self.root, command=self.on_create_lot, text='Create Parking Lot', font='Arial 12',
-                  bg='lightblue', fg='black', activebackground='teal').grid(row=4, column=0, padx=4, pady=4)
-
-        # Car Management
-        tk.Label(self.root, text='Car Management', font='Arial 12 bold').grid(row=5, column=0, columnspan=6, padx=10)
-        tk.Label(self.root, text='Make', font='Arial 12').grid(row=6, column=0)
-        tk.Entry(self.root, textvariable=self.make_value, font='Arial 12', width=12).grid(row=6, column=1)
-        tk.Label(self.root, text='Model', font='Arial 12').grid(row=6, column=2)
-        tk.Entry(self.root, textvariable=self.model_value, font='Arial 12', width=12).grid(row=6, column=3)
-        tk.Label(self.root, text='Color', font='Arial 12').grid(row=7, column=0)
-        tk.Entry(self.root, textvariable=self.color_value, font='Arial 12', width=12).grid(row=7, column=1)
-        tk.Label(self.root, text='Registration #', font='Arial 12').grid(row=7, column=2)
-        tk.Entry(self.root, textvariable=self.reg_value, font='Arial 12', width=12).grid(row=7, column=3)
-
-        tk.Checkbutton(self.root, text='Electric', variable=self.cbx_ev_car, font='Arial 12').grid(row=8, column=0)
-        tk.Checkbutton(self.root, text='Motorcycle', variable=self.cbx_motor, font='Arial 12').grid(row=8, column=1)
-
-        # Parking selection for vehicle
-        tk.Label(self.root, text='Select City', font='Arial 12').grid(row=9, column=0)
-        self.city_park_combo = ttk.Combobox(self.root, values=city_list, font='Arial 12', width=12)
-        self.city_park_combo.set('--Select city--')
-        self.city_park_combo.grid(row=9, column=1)
-        self.city_park_combo.bind("<<ComboboxSelected>>", self.update_sites_park)
-
-        tk.Label(self.root, text='Select Site', font='Arial 12').grid(row=9, column=2)
-        self.site_park_combo = ttk.Combobox(self.root, values=[], font='Arial 12', width=12)
-        self.site_park_combo.set('--Select site--')
-        self.site_park_combo.grid(row=9, column=3)
-        self.site_park_combo.bind("<<ComboboxSelected>>", self.update_levels_park)
-
-        tk.Label(self.root, text='Select Level', font='Arial 12').grid(row=9, column=4)
-        self.level_park_combo = ttk.Combobox(self.root, values=[], font='Arial 12', width=6)
-        self.level_park_combo.set('--Select level--')
-        self.level_park_combo.grid(row=9, column=5)
-
-        tk.Button(self.root, command=self.on_park_vehicle, text='Park Vehicle', font='Arial 12',
-                  bg='lightgreen', fg='black', activebackground='green').grid(row=10, column=0, padx=4, pady=4)
-
-        # Vehicle Removal
-        tk.Label(self.root, text='Slot # to remove', font='Arial 12').grid(row=11, column=0)
-        tk.Entry(self.root, textvariable=self.slot_num_for_vehicle_remove, font='Arial 12', width=12).grid(row=11, column=1)
-        tk.Checkbutton(self.root, text='Remove EV?', variable=self.cbx_ev_remove, font='Arial 12').grid(row=11, column=2)
-        tk.Button(self.root, command=self.on_remove_vehicle, text='Remove Vehicle', font='Arial 12',
-                  bg='tomato', fg='black', activebackground='red').grid(row=11, column=3)
-
-        # Status Buttons
-        tk.Button(self.root, command=self.on_status, text='Current Lot Status', font='Arial 12',
-                  bg='PaleGreen1', fg='black', activebackground='PaleGreen3').grid(row=12, column=0, padx=4, pady=4)
-        tk.Button(self.root, command=self.on_charge_status, text='EV Charge Status', font='Arial 12',
-                  bg='lightblue', fg='black', activebackground='teal').grid(row=12, column=1, padx=4, pady=4)
-
-        # Search Parameters
-        tk.Label(self.root, text='Search Option', font='Arial 12').grid(row=12, column=2)
-        option_list = ['Registration No', 'Color', 'Model', 'Make']
-        self.search_combo = ttk.Combobox(self.root, values=option_list, font='Arial 12', width=12)
-        self.search_combo.set('--Select Option-')
-        self.search_combo.grid(row=12, column=3)
-        # self.city_park_combo.bind("<<ComboboxSelected>>", self.update_sites_park)
-
-        tk.Entry(self.root, textvariable=self.seach_parameter, font='Arial 12', width=12).grid(row=12, column=4)
-        tk.Button(self.root, command=self.on_search, text='Search', font='Arial 12',
-                  bg='lightblue', fg='black', activebackground='teal').grid(row=12, column=5, padx=4, pady=4)
-
-        # Text Display
-        self.txt_display.grid(row=13, column=0, columnspan=6, padx=10, pady=10)
-
     def create_widgets(self):
         # Heading
         tk.Label(self.root, text='Parking Lot Manager', font='Arial 14 bold').grid(row=0, column=0, columnspan=6, padx=10)
@@ -141,15 +41,15 @@ class ParkingLotUI:
 
         # City & Site & Level for lot creation
         tk.Label(self.root, text='City', font='Arial 12').grid(row=2, column=0)
-        city_list = self.app_service.get_all_cities()
-        self.city_combo = ttk.Combobox(self.root, values=city_list, textvariable=self.city_name, font='Arial 12', width=12)
+        city_list = Config.CITY_LIST
+        self.city_combo = ttk.Combobox(self.root, values=city_list,state="readonly", textvariable=self.city_name, font='Arial 12', width=12)
         self.city_combo.set('--Select city--')
         self.city_combo.grid(row=2, column=1)
-
+        
         tk.Label(self.root, text='Site', font='Arial 12').grid(row=2, column=2)
         self.site_combo = tk.Entry(self.root, textvariable=self.site_name, font='Arial 12', width=12)
         self.site_combo.grid(row=2, column=3)
-
+        
         tk.Label(self.root, text='Level', font='Arial 12').grid(row=2, column=4)
         self.level_combo = tk.Entry(self.root, textvariable=self.level_value, font='Arial 12', width=6)
         self.level_combo.grid(row=2, column=5)
@@ -181,19 +81,19 @@ class ParkingLotUI:
 
         # Parking selection for vehicle
         tk.Label(self.root, text='Select City', font='Arial 12').grid(row=9, column=0)
-        self.city_park_combo = ttk.Combobox(self.root, values=city_list, font='Arial 12', width=12)
+        self.city_park_combo = ttk.Combobox(self.root, values=city_list,state="readonly", font='Arial 12', width=12)
         self.city_park_combo.set('--Select city--')
         self.city_park_combo.grid(row=9, column=1)
         self.city_park_combo.bind("<<ComboboxSelected>>", self.update_sites_park)
 
         tk.Label(self.root, text='Select Site', font='Arial 12').grid(row=9, column=2)
-        self.site_park_combo = ttk.Combobox(self.root, values=[], font='Arial 12', width=12)
+        self.site_park_combo = ttk.Combobox(self.root, values=[],state="readonly", font='Arial 12', width=12)
         self.site_park_combo.set('--Select site--')
         self.site_park_combo.grid(row=9, column=3)
         self.site_park_combo.bind("<<ComboboxSelected>>", self.update_levels_park)
 
         tk.Label(self.root, text='Select Level', font='Arial 12').grid(row=9, column=4)
-        self.level_park_combo = ttk.Combobox(self.root, values=[], font='Arial 12', width=6)
+        self.level_park_combo = ttk.Combobox(self.root, values=[],state="readonly", font='Arial 12', width=6)
         self.level_park_combo.set('--Select level--')
         self.level_park_combo.grid(row=9, column=5)
 
@@ -216,10 +116,10 @@ class ParkingLotUI:
         # Search Parameters
         tk.Label(self.root, text='Search Option', font='Arial 12').grid(row=12, column=2)
         option_list = ['Registration No', 'Color', 'Model', 'Make']
-        self.search_combo = ttk.Combobox(self.root, values=option_list, font='Arial 12', width=12)
+        self.search_combo = ttk.Combobox(self.root, values=option_list,state="readonly", font='Arial 12', width=12)
         self.search_combo.set('--Select Option-')
         self.search_combo.grid(row=12, column=3)
-
+        
         tk.Entry(self.root, textvariable=self.seach_parameter, font='Arial 12', width=12).grid(row=12, column=4)
         tk.Button(self.root, command=self.on_search, text='Search', font='Arial 12',
                   bg='lightblue', fg='black', activebackground='teal').grid(row=12, column=5, padx=4, pady=4)
@@ -227,6 +127,7 @@ class ParkingLotUI:
         # Text Display
         self.txt_display.grid(row=13, column=0, columnspan=6, padx=10, pady=10)
 
+    
     # ---------------- UI helper methods ----------------
     def update_sites(self, event=None):
         city = self.city_name.get()
@@ -265,15 +166,15 @@ class ParkingLotUI:
         if site in ("", SITE_PLACEHOLDER):
             missing_fields.append("Site")
 
-        else:
-            try:
-                num_regular = int(self.num_regular_slots.get())
-                num_ev = int(self.num_ev_slots.get())
-                level = int(self.level_value.get())
-                chargers = int(self.num_EVChargers.get())
-            except ValueError:
-                self.show_error("Level, Slots, and EV Chargers must be valid numbers!")
-                return
+        
+        try:
+            num_regular = int(self.num_regular_slots.get())
+            num_ev = int(self.num_ev_slots.get())
+            level = int(self.level_value.get())
+            chargers = int(self.num_EVChargers.get())
+        except ValueError:
+            self.show_error("Level, Slots, and EV Chargers must be valid numbers!")
+            return
         if num_ev > 0 and chargers < 1:
             missing_fields.append("You can't create a Parking Lot that have Ev Cars with no Charger!")
         if missing_fields:
